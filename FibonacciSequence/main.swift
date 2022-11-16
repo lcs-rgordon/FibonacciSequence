@@ -40,3 +40,33 @@ func fibonacciSequenceByIteration(terms: Int) {
 
 // Get the Fibonacci Sequence using iteration
 fibonacciSequenceByIteration(terms: 10)
+
+// Print the Fibonacci sequence using recursion
+func fibonacciSequenceByRecursion(terms: Int) -> Int {
+    
+    if terms <= 0 {
+        print("Please provide a value greater than 0.")
+        exit(0)
+    } else if terms == 1 {
+        let currentTerm = 0
+        print("\(currentTerm), ", terminator: "")
+        return currentTerm
+    } else if terms == 2 {
+        let currentTerm = 1
+        print("\(currentTerm), ", terminator: "")
+        return currentTerm
+    } else {
+        let priorTerm = fibonacciSequenceByRecursion(terms: terms - 1)
+        let termBeforeThat = fibonacciSequenceByRecursion(terms: terms - 2)
+        let currentTerm = priorTerm + termBeforeThat
+
+        // Print written output
+        print(", \(currentTerm)", terminator: "")
+        
+        // Return output to feed recursive function calls
+        return priorTerm + termBeforeThat
+    }
+    
+}
+
+print(fibonacciSequenceByRecursion(terms: 5))
