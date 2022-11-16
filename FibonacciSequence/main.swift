@@ -41,32 +41,66 @@ func fibonacciSequenceByIteration(terms: Int) {
 // Get the Fibonacci Sequence using iteration
 fibonacciSequenceByIteration(terms: 10)
 
-// Print the Fibonacci sequence using recursion
-func fibonacciSequenceByRecursion(terms: Int) -> Int {
+// Get the next term in a Fibonacci sequence, using recursion
+func fibonacciSequenceNextTermWithRecursion(termNMinus2: inout Int,
+                                            termNMinus1: inout Int,
+                                            currentTerm: inout Int,
+                                            totalTerms: Int) {
+    // Get the current term's value
+    let currentTermValue = termNMinus2 + termNMinus1
     
-    if terms <= 0 {
-        print("Please provide a value greater than 0.")
-        exit(0)
-    } else if terms == 1 {
-        let currentTerm = 0
-        print("\(currentTerm), ", terminator: "")
-        return currentTerm
-    } else if terms == 2 {
-        let currentTerm = 1
-        print("\(currentTerm), ", terminator: "")
-        return currentTerm
+    // Print the current term
+    print(", \(currentTermValue)", terminator: "")
+    
+    // Update prior terms
+    termNMinus2 = termNMinus1
+    termNMinus1 = currentTermValue
+    
+    // Increment what term we are on
+    currentTerm += 1
+    
+    // Base case
+    if currentTerm == totalTerms {
+        return
     } else {
-        let priorTerm = fibonacciSequenceByRecursion(terms: terms - 1)
-        let termBeforeThat = fibonacciSequenceByRecursion(terms: terms - 2)
-        let currentTerm = priorTerm + termBeforeThat
-
-        // Print written output
-        print(", \(currentTerm)", terminator: "")
-        
-        // Return output to feed recursive function calls
-        return priorTerm + termBeforeThat
+        // Not done finding terms, so keep invoking the function
+        // This is the recursive case
+        fibonacciSequenceNextTermWithRecursion(termNMinus2: &termNMinus2,
+                                               termNMinus1: &termNMinus1,
+                                               currentTerm: &currentTerm,
+                                               totalTerms: totalTerms)
     }
     
 }
 
-print(fibonacciSequenceByRecursion(terms: 5))
+
+// Print the Fibonacci sequence using recursion
+func fibonacciSequenceByRecursion(terms: Int) {
+    
+    if terms <= 0 {
+        print("Please provide a value greater than 0.")
+    } else if terms == 1 {
+        print("0", terminator: "")
+    } else if terms == 2 {
+        print("0, 1", terminator: "")
+    } else {
+        print("0, 1", terminator: "")
+
+        var termNMinus2 = 0
+        var termNMinus1 = 1
+        var currentTerm = 2
+
+        // Start using the recursive function
+        fibonacciSequenceNextTermWithRecursion(termNMinus2: &termNMinus2,
+                                               termNMinus1: &termNMinus1,
+                                               currentTerm: &currentTerm,
+                                               totalTerms: terms)
+
+    }
+    
+    // Place any input that follows on the next line
+    print("")
+    
+}
+
+fibonacciSequenceByRecursion(terms: 10)
